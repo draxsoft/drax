@@ -22,3 +22,9 @@ For detailed instructions on using Drax, refer to the help command inside the sc
 **ISSUES**
 
 If you encounter any issues or have suggestions for improvements, please open an issue on GitHub.
+#
+**INSTALL:**
+
+```
+curl -sL $(curl -s https://api.github.com/repos/draxsoft/drax./releases/latest | grep -o "https://.*drax\.sh") -o drax.sh && chmod +x drax.sh
+```
