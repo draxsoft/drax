@@ -11,9 +11,12 @@ class Drax < Formula
     begin
       system "unzip", "#{cached_download}", "-d", "#{tmpdir}"
 
-      # Change directory to the extracted folder
-      extracted_dir = "#{tmpdir}/drax-1.0.0"
-      unless File.directory?(extracted_dir) && File.exist?("#{extracted_dir}/Package.swift")
+      # Find the extracted directory
+      extracted_dir = Dir.glob("#{tmpdir}/drax-*").first
+      raise "Unable to find extracted directory" unless extracted_dir && File.directory?(extracted_dir)
+
+      # Check if Package.swift exists in the correct directory
+      unless File.exist?("#{extracted_dir}/Package.swift")
         raise "Package.swift not found in extracted directory. Aborting."
       end
 
