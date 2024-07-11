@@ -2,7 +2,7 @@ class Drax < Formula
   desc "A command-line tool for various game settings"
   homepage "https://github.com/draxsoft/homebrew-drax"
   url "https://github.com/draxsoft/homebrew-drax/archive/refs/tags/v1.0.0.zip"
-  sha256 "10d33b9133532905d54efad6e4bf3416253b5144885ead5061433d94f06fa04f"
+  sha256 "710737cfb9cbf47c378a6966133438ba45379bee1f2d005d38cdeede11322933"
 
   depends_on :xcode => ["12.0", :build]
 
