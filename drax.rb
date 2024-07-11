@@ -7,14 +7,28 @@ class Drax < Formula
   depends_on :xcode => ["12.0", :build]
 
   def install
-    system "swift", "build", "-c", "release", "--disable-sandbox"
-    bin.install ".build/release/drax"
+    # Unzip the downloaded file to a temporary directory
+    system "unzip", "#{cached_download}", "-d", "drax_temp_extracted"
+
+    # Change directory to the extracted folder
+    cd "drax_temp_extracted/drax-1.0.0" do
+      # Check if Package.swift exists in the correct directory
+      unless File.exist?("Package.swift")
+        raise "Package.swift not found. Aborting."
+      end
+
+      # Build the project
+      system "swift", "build", "-c", "release", "--disable-sandbox"
+
+      # Install the built binary
+      bin.install ".build/release/drax"
+    end
+
+    # Clean up temporary directory after installation
+    rm_rf "drax_temp_extracted"
   end
 
   test do
-    # Check if the executable exists
-    assert_predicate bin/"drax", :exist?
-
     # Basic test to ensure the tool runs without errors
     output = shell_output("#{bin}/drax help")
     assert_match "Usage: drax <argument>", output
