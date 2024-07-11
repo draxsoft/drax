@@ -7,8 +7,19 @@ class Drax < Formula
   depends_on :xcode => ["12.0", :build]
 
   def install
-    system "swift", "build", "-c", "release", "--disable-sandbox"
-    bin.install ".build/release/drax"
+    # Unzip the downloaded file to a temporary directory
+    system "unzip", "#{cached_download}", "-d", "temp_extracted_dir"
+
+    # Change directory to the extracted folder
+    Dir.chdir("temp_extracted_dir/drax") do
+      # Build the project
+      system "swift", "build", "-c", "release", "--disable-sandbox"
+      # Install the built binary
+      bin.install ".build/release/drax"
+    end
+
+    # Clean up temporary directory
+    system "rm", "-rf", "temp_extracted_dir"
   end
 
   test do
