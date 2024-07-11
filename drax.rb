@@ -7,7 +7,7 @@ class Drax < Formula
   depends_on :xcode => ["12.0", :build]
 
   def install
-    system "swift", "build", "-c", "release"
+    system "swift", "build", "-c", "release", "--disable-sandbox"
     bin.install ".build/release/drax"
   end
 
