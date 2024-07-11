@@ -1,37 +1,22 @@
 class Drax < Formula
   desc "A command-line tool for various game settings"
   homepage "https://github.com/draxsoft/drax"
-  url "https://github.com/draxsoft/drax/archive/refs/tags/v1.0.0.zip"
+  url "https://github.com/draxsoft/drax/archive/refs/tags/v1.0.0.tar.gz"
   sha256 "a8982734c77c0bf5274c9b8436217376ece3a9316e6c04c0cb80694c3d00031d"
 
   depends_on :xcode => ["12.0", :build]
 
   def install
-    # Create a temporary directory for extraction
-    temp_extracted_dir = "#{Dir.pwd}/drax_temp_extracted"
-
-    # Unzip the downloaded file to the temporary directory
-    system "unzip", "#{cached_download}", "-d", "#{temp_extracted_dir}"
-
-    # Change directory to the extracted folder
-    Dir.chdir("#{temp_extracted_dir}/drax-1.0.0") do
-      # Check if Package.swift exists in the correct directory
-      unless File.exist?("Package.swift")
-        raise "Package.swift not found in #{Dir.pwd}. Aborting."
-      end
-
-      # Build the project
-      system "swift", "build", "-c", "release", "--disable-sandbox"
-
-      # Install the built binary
-      bin.install ".build/release/drax"
-    end
-
-    # Clean up temporary directory
-    system "rm", "-rf", "#{temp_extracted_dir}"
+    system "swift", "build", "-c", "release", "--disable-sandbox"
+    bin.install ".build/release/drax"
   end
 
   test do
-    system "#{bin}/drax", "help"
+    # Check if the executable exists
+    assert_predicate bin/"drax", :exist?
+
+    # Basic test to ensure the tool runs without errors
+    output = shell_output("#{bin}/drax help")
+    assert_match "Usage: drax <argument>", output
   end
 end
