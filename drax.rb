@@ -7,11 +7,14 @@ class Drax < Formula
   depends_on :xcode => ["12.0", :build]
 
   def install
-    # Unzip the downloaded file to a temporary directory
-    system "unzip", "#{cached_download}", "-d", "temp_extracted_dir"
+    # Create a temporary directory for extraction
+    temp_extracted_dir = "#{Dir.pwd}/drax_temp_extracted"
+
+    # Unzip the downloaded file to the temporary directory
+    system "unzip", "#{cached_download}", "-d", "#{temp_extracted_dir}"
 
     # Change directory to the extracted folder
-    Dir.chdir("temp_extracted_dir/drax-1.0.0") do
+    Dir.chdir("#{temp_extracted_dir}/drax-1.0.0") do
       # Check if Package.swift exists in the correct directory
       unless File.exist?("Package.swift")
         raise "Package.swift not found in #{Dir.pwd}. Aborting."
@@ -25,7 +28,7 @@ class Drax < Formula
     end
 
     # Clean up temporary directory
-    system "rm", "-rf", "temp_extracted_dir"
+    system "rm", "-rf", "#{temp_extracted_dir}"
   end
 
   test do
