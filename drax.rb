@@ -12,8 +12,14 @@ class Drax < Formula
 
     # Change directory to the extracted folder
     Dir.chdir("temp_extracted_dir/drax-1.0.0") do
+      # Check if Package.swift exists in the correct directory
+      unless File.exist?("Package.swift")
+        raise "Package.swift not found in #{Dir.pwd}. Aborting."
+      end
+
       # Build the project
       system "swift", "build", "-c", "release", "--disable-sandbox"
+
       # Install the built binary
       bin.install ".build/release/drax"
     end
