@@ -11,7 +11,7 @@ class Drax < Formula
     system "unzip", "#{cached_download}", "-d", "temp_extracted_dir"
 
     # Change directory to the extracted folder
-    Dir.chdir("temp_extracted_dir/drax") do
+    Dir.chdir("temp_extracted_dir/drax-1.0.0") do
       # Build the project
       system "swift", "build", "-c", "release", "--disable-sandbox"
       # Install the built binary
