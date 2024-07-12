@@ -12,18 +12,24 @@ class Drax < Formula
     system "unzip", "#{cached_download}", "-d", "#{buildpath}"
 
     # Find the directory that got unzipped
-    unzipped_dir = Dir["#{buildpath}/*"].first
+    unzipped_dir = Dir["#{buildpath}/v1.0.0/*"].first
     cd unzipped_dir do
       # Build the project
-      system "swift", "build", "--disable-sandbox", "-c", "release"
+      system "swift", "build", "-c", "release"
 
       # Install the built executable
-      bin.install ".build/release/drax"
+      system "sudo", "cp", ".build/release/drax", "/usr/local/bin/"
     end
   end
 
   def post_install
-    # Run `drax help` after installation
-    system "#{bin}/drax", "help"
+    # Output a message to confirm installation
+    ohai "drax installed successfully!"
+    ohai "Run `drax help` to get started."
+  end
+
+  test do
+    # Simple test to check if drax runs
+    system "#{bin}/drax", "--version"
   end
 end
