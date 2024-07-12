@@ -9,7 +9,7 @@ class Drax < Formula
 
   def install
     # Ensure the cache directory exists
-    mkdir_p "#{buildpath}/v1.0.0"
+    mkdir_p "#{buildpath}/2.0.0"
 
     # Unzip the downloaded archive to a specific directory
     system "unzip", "#{cached_download}", "-d", "#{buildpath}/v1.0.0"
