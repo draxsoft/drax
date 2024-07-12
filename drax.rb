@@ -15,7 +15,7 @@ class Drax < Formula
     system "unzip", "#{cached_download}", "-d", "#{buildpath}/v1.0.0"
 
     # Change directory to the unzipped directory
-    cd "#{buildpath}/v1.0.0" do
+    cd "#{buildpath}/2.0.0" do
       # Build the project
       system "swift", "build", "--disable-sandbox", "-c", "release"
 
