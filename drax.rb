@@ -6,10 +6,9 @@ class Drax < Formula
   depends_on :xcode => ["12.0", :build]
 
   def install
-    # Create a temporary directory
+    # Unzip the downloaded file to a temporary directory
     tmpdir = Dir.mktmpdir
     begin
-      # Unzip the downloaded file to the temporary directory
       system "unzip", "#{cached_download}", "-d", "#{tmpdir}"
 
       # Find the extracted directory
@@ -17,7 +16,7 @@ class Drax < Formula
       raise "Unable to find extracted directory" unless extracted_dir && File.directory?(extracted_dir)
 
       # Change directory to the extracted folder
-      cd extracted_dir do
+      Dir.chdir(extracted_dir) do
         # Build the project
         system "swift", "build", "-c", "release", "--disable-sandbox"
 
