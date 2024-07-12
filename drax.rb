@@ -7,29 +7,15 @@ class Drax < Formula
 
   def install
     # Unzip the downloaded file to a temporary directory
-    tmpdir = Dir.mktmpdir
-    begin
-      system "unzip", "#{cached_download}", "-d", "#{tmpdir}"
+    system "unzip", "#{cached_download}"
 
-      # Find the extracted directory
-      extracted_dir = Dir.glob("#{tmpdir}/drax-*").first
-      raise "Unable to find extracted directory" unless extracted_dir && File.directory?(extracted_dir)
-
-      # Check if Package.swift exists in the correct directory
-      unless File.exist?("#{extracted_dir}/Package.swift")
-        raise "Package.swift not found in extracted directory. Aborting."
-      end
-
+    # Navigate into the extracted directory
+    cd "drax-1.0.0" do
       # Build the project
-      cd extracted_dir do
-        system "swift", "build", "-c", "release", "--disable-sandbox"
+      system "swift", "build", "-c", "release", "--disable-sandbox"
 
-        # Install the built binary
-        bin.install ".build/release/drax"
-      end
-    ensure
-      # Clean up temporary directory after installation
-      rm_rf tmpdir
+      # Install the built binary to Homebrew's bin directory
+      bin.install ".build/release/drax"
     end
   end
 
