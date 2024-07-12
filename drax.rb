@@ -8,17 +8,19 @@ class Drax < Formula
   depends_on :xcode => ["12.0", :build]
 
   def install
-    # Unzip the downloaded archive
-    system "unzip", "#{cached_download}", "-d", "#{buildpath}"
+    # Ensure the cache directory exists
+    mkdir_p "#{buildpath}/v1.0.0"
 
-    # Find the directory that got unzipped
-    unzipped_dir = Dir["#{buildpath}/v1.0.0/*"].first
-    cd unzipped_dir do
+    # Unzip the downloaded archive to a specific directory
+    system "unzip", "#{cached_download}", "-d", "#{buildpath}/v1.0.0"
+
+    # Change directory to the unzipped directory
+    cd "#{buildpath}/v1.0.0" do
       # Build the project
-      system "swift", "build", "-c", "release"
+      system "swift", "build", "--disable-sandbox", "-c", "release"
 
       # Install the built executable
-      system "sudo", "cp", ".build/release/drax", "/usr/local/bin/"
+      bin.install ".build/release/drax"
     end
   end
 
