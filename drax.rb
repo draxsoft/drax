@@ -1,7 +1,7 @@
 class Drax < Formula
   desc "Swift command-line tool for [description of drax]"
   homepage "https://github.com/draxsoft/drax"
-  url "https://github.com/draxsoft/drax/releases/download/v1.0.0/v1.0.0.zip"
+  url "https://github.com/draxsoft/drax/releases/download/v2.0.0/v2.0.0.zip"
   sha256 "10d33b9133532905d54efad6e4bf3416253b5144885ead5061433d94f06fa04f"
   version "1.0.0"
 
